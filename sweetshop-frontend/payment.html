@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Payment - Sweet Shop</title>
+
+  <!-- External CSS -->
+  <link rel="stylesheet" href="styling/payment.css" />
+</head>
+<body>
+  <div class="container">
+    <!-- Header -->
+    <div class="header">
+      <div class="logo-section">
+        <img src="assets/Images/logo.png" alt="Logo" class="logo" onerror="this.style.display='none'">
+        <div>
+          <div class="brand-name">Desi Mithai</div>
+          <div style="color:#666;font-size:0.9rem;">Secure Checkout</div>
+        </div>
+      </div>
+      <button class="back-btn" onclick="goBack()">← Back to Cart</button>
+    </div>
+
+    <!-- Main Payment Content -->
+    <div class="payment-wrapper">
+
+      <!-- Payment Section -->
+      <div class="payment-section">
+        <h2 class="section-title"><span>💳</span> Select Payment Method</h2>
+
+        <div class="payment-methods">
+          <div class="payment-method active" onclick="selectPayment('card')">
+            <div class="payment-icon">💳</div>
+            <div class="payment-name">Card</div>
+          </div>
+          <div class="payment-method" onclick="selectPayment('upi')">
+            <div class="payment-icon">📱</div>
+            <div class="payment-name">UPI</div>
+          </div>
+          <div class="payment-method" onclick="selectPayment('netbanking')">
+            <div class="payment-icon">🏦</div>
+            <div class="payment-name">Net Banking</div>
+          </div>
+          <div class="payment-method" onclick="selectPayment('wallet')">
+            <div class="payment-icon">👛</div>
+            <div class="payment-name">Wallet</div>
+          </div>
+          <div class="payment-method" onclick="selectPayment('cod')">
+            <div class="payment-icon">💵</div>
+            <div class="payment-name">Cash on Delivery</div>
+          </div>
+        </div>
+
+        <!-- Forms (unchanged) -->
+        <div id="cardForm" class="payment-form active">...</div>
+        <div id="upiForm" class="payment-form">...</div>
+        <div id="netbankingForm" class="payment-form">...</div>
+        <div id="walletForm" class="payment-form">...</div>
+        <div id="codForm" class="payment-form">...</div>
+
+        <div class="security-badge">
+          🔒 Your payment information is secure and encrypted
+        </div>
+      </div>
+
+      <!-- Order Summary -->
+      <div class="order-summary">
+        <h3 class="summary-title">Order Summary</h3>
+        <div id="orderItems"></div>
+
+        <div class="price-breakdown">
+          <div class="price-row"><span>Subtotal</span><span id="subtotal">₹0.00</span></div>
+          <div class="price-row"><span>Delivery Fee</span><span id="deliveryFee">₹0.00</span></div>
+          <div class="price-row"><span>GST (5%)</span><span id="gst">₹0.00</span></div>
+          <div class="price-row total">
+            <span>Total Amount</span><span id="totalAmount">₹0.00</span>
+          </div>
+        </div>
+
+        <button class="btn-pay" onclick="processPayment()">Pay Now</button>
+      </div>
+    </div>
+
+    <div class="loading" id="loadingState">
+      <div class="spinner"></div>
+      <h3>Processing Payment...</h3>
+    </div>
+
+    <div class="success-message" id="successMessage">
+      <div class="success-icon">✅</div>
+      <h2>Payment Successful!</h2>
+      <button class="btn-pay" onclick="window.location.href='dashboard.html'">
+        Back to Dashboard
+      </button>
+    </div>
+  </div>
+
+  <!-- External JS -->
+  <script src="js/payment.js"></script>
+</body>
+</html>

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Register - Sweet Shop</title>
+
+  <!-- External CSS -->
+  <link rel="stylesheet" href="styling/register.css" />
+</head>
+<body>
+  <div class="register-container">
+    <div class="logo-section">
+      <img
+        src="assets/Images/logo.png"
+        alt="Logo"
+        class="logo"
+        onerror="this.style.display='none'"
+      />
+      <div class="brand-name">Desi Mithai</div>
+      <p class="subtitle">Just For You</p>
+    </div>
+
+    <h2>Create Account</h2>
+
+    <div id="errorMessage" class="error-message"></div>
+    <div id="successMessage" class="success-message"></div>
+
+    <form id="registerForm">
+      <div class="form-group">
+        <label for="username">Username *</label>
+        <div class="input-wrapper">
+          <span class="input-icon">👤</span>
+          <input type="text" id="username" placeholder="Enter username" required minlength="3" />
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="email">Email Address *</label>
+        <div class="input-wrapper">
+          <span class="input-icon">📧</span>
+          <input type="email" id="email" placeholder="Enter your email" required />
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="password">Password *</label>
+        <div class="input-wrapper">
+          <span class="input-icon">🔒</span>
+          <input type="password" id="password" placeholder="Enter password" required minlength="6" />
+        </div>
+        <div class="password-requirements">Minimum 6 characters</div>
+      </div>
+
+      <div class="form-group">
+        <label for="mobile">Mobile Number *</label>
+        <div class="input-wrapper">
+          <span class="input-icon">📱</span>
+          <input type="tel" id="mobile" placeholder="Enter mobile number" required minlength="10" maxlength="15" />
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="address">Address *</label>
+        <div class="input-wrapper">
+          <span class="input-icon">🏠</span>
+          <input type="text" id="address" placeholder="Enter your address" required minlength="5" />
+        </div>
+      </div>
+
+      <button type="submit" class="btn-register" id="registerBtn">
+        Create Account
+      </button>
+    </form>
+
+    <div class="login-link">
+      Already have an account? <a href="login.html">Login here</a>
+    </div>
+
+    <div class="back-link">
+      <a href="landing.html">← Back to Home</a>
+    </div>
+  </div>
+
+  <!-- External JS -->
+  <script src="js/register.js"></script>
+</body>
+</html>

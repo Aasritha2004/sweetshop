@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard - Sweet Shop</title>
+  <link rel="stylesheet" href="styling/dashboard.css">
+</head>
+<body>
+
+<!-- Header -->
+<header class="header">
+  <div class="header-left">
+    <img src="assets/Images/logo.png" alt="Logo" class="logo">
+    <span class="brand-name">Desi Mithai</span>
+  </div>
+
+  <div class="header-right">
+    <!-- User Account -->
+    <div class="user-account" id="userAccount" onclick="toggleAccountDropdown()">
+      <div class="user-avatar">
+        <span id="userInitial">U</span>
+      </div>
+      <span id="userName">Loading...</span>
+      <span class="dropdown-arrow">▼</span>
+      
+      <div class="dropdown" id="accountDropdown">
+        <div class="dropdown-header">
+          <h3 id="accName">-</h3>
+          <span id="accRole" class="role-badge">user</span>
+        </div>
+        <div class="dropdown-body">
+          <p><strong>Email:</strong> <span id="accEmail">-</span></p>
+          <p><strong>Mobile:</strong> <span id="accMobile">-</span></p>
+          <p><strong>Address:</strong> <span id="accAddress">-</span></p>
+        </div>
+        <button onclick="viewPurchaseHistory()" class="dropdown-btn">Purchase History</button>
+      </div>
+    </div>
+
+    <!-- Cart Icon -->
+    <div class="cart-icon" onclick="toggleCart()">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/>
+      </svg>
+      <span id="cartCount" class="cart-badge">0</span>
+    </div>
+
+    <!-- Admin Button -->
+    <button id="addSweetBtn" onclick="showAddSweet()" class="btn btn-admin" style="display:none;">
+      <span>+ Add Sweet</span>
+    </button>
+
+    <!-- Logout Button -->
+    <button onclick="logout()" class="btn btn-logout">Logout</button>
+  </div>
+</header>
+
+<!-- Main Content -->
+<main class="main-content">
+  
+  <!-- Search and Filter Section -->
+  <section class="search-section">
+    <div class="container">
+      <h1 class="page-title">Browse Our Collection</h1>
+      
+      <div class="search-filters">
+        <div class="search-box">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
+          </svg>
+          <input type="text" id="search" placeholder="Search sweets by name..." oninput="loadSweets()">
+        </div>
+        
+        <select id="categoryFilter" onchange="loadSweets()" class="filter-select">
+          <option value="">All Categories</option>
+          <option value="Barfi">Barfi</option>
+          <option value="Laddoo">Laddoo</option>
+          <option value="Halwa">Halwa</option>
+          <option value="Farsan">Farsan</option>
+        </select>
+        
+        <div class="price-filter">
+          <label>Price Range:</label>
+          <input type="number" id="minPrice" placeholder="Min" min="0" oninput="loadSweets()" class="price-input">
+          <span>-</span>
+          <input type="number" id="maxPrice" placeholder="Max" min="0" oninput="loadSweets()" class="price-input">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Sweets Grid -->
+  <section class="sweets-section">
+    <div class="container">
+      <div id="sweetList" class="sweets-grid">
+        <!-- Loading spinner -->
+        <div class="loading">
+          <div class="spinner"></div>
+          <p>Loading delicious sweets...</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- Cart Sidebar -->
+<div id="cartSidebar" class="cart-sidebar">
+  <div class="cart-header">
+    <h2>My Cart</h2>
+    <button onclick="toggleCart()" class="close-btn">✕</button>
+  </div>
+  
+  <div class="cart-items" id="cartItems">
+    <div class="empty-cart">
+      <svg width="80" height="80" viewBox="0 0 24 24" fill="#ccc">
+        <path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/>
+      </svg>
+      <p>Your cart is empty</p>
+    </div>
+  </div>
+  
+  <div class="cart-footer">
+    <div class="cart-total">
+      <span>Total:</span>
+      <span id="cartTotal" class="total-amount">₹0.00</span>
+    </div>
+    <button id="checkoutBtn" onclick="checkout()" class="btn btn-checkout">
+      Proceed to Checkout
+    </button>
+  </div>
+</div>
+
+<!-- Purchase History Modal -->
+<div id="historyModal" class="modal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h2>Purchase History</h2>
+      <button onclick="closeHistoryModal()" class="close-btn">✕</button>
+    </div>
+    <div class="modal-body" id="historyContent">
+      <div class="loading">
+        <div class="spinner"></div>
+        <p>Loading history...</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Edit Sweet Modal -->
+<div id="editModal" class="modal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h2 id="modalTitle">Add New Sweet</h2>
+      <button onclick="closeEditModal()" class="close-btn">✕</button>
+    </div>
+    <div class="modal-body">
+      <form id="sweetForm" onsubmit="saveSweetForm(event)">
+        <input type="hidden" id="sweetId">
+        
+        <div class="form-group">
+          <label>Name *</label>
+          <input type="text" id="sweetName" required>
+        </div>
+        
+        <div class="form-group">
+          <label>Category *</label>
+          <select id="sweetCategory" required>
+            <option value="Barfi">Barfi</option>
+            <option value="Laddoo">Laddoo</option>
+            <option value="Halwa">Halwa</option>
+            <option value="Farsan">Farsan</option>
+          </select>
+        </div>
+        
+        <div class="form-row">
+          <div class="form-group">
+            <label>Price (₹/100g) *</label>
+            <input type="number" id="sweetPrice" min="1" step="0.01" required>
+          </div>
+          
+          <div class="form-group">
+            <label>Quantity *</label>
+            <input type="number" id="sweetQuantity" min="0" required>
+          </div>
+        </div>
+        
+        <div class="form-group">
+          <label>Description</label>
+          <textarea id="sweetDescription" rows="3"></textarea>
+        </div>
+        
+        <div class="form-group">
+          <label>Image Path *</label>
+          <input type="text" id="sweetImg" placeholder="assets/Images/sweet.jpg" required>
+        </div>
+        
+        <div class="form-actions">
+          <button type="button" onclick="closeEditModal()" class="btn btn-secondary">Cancel</button>
+          <button type="submit" class="btn btn-primary">Save Sweet</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<script src="js/dashboard.js"></script>
+</body>
+</html>

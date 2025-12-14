@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sweet Shop - Taste The Tradition</title>
+  <link rel="stylesheet" href="styling/landing.css">
+</head>
+<body>
+
+<!-- Background Video -->
+<video autoplay muted loop playsinline class="bg-video">
+  <source src="assets/Videos/video1.mp4" type="video/mp4">
+</video>
+
+<!-- Overlay -->
+<div class="overlay"></div>
+
+<!-- Header -->
+<header>
+  <div class="logo-container">
+    <img src="assets/Images/logo.png" alt="Sweet Shop Logo" class="logo">
+    <span class="brand-name">Desi Mithai</span>
+  </div>
+  <nav class="nav-buttons">
+    <button onclick="goLogin()" class="btn btn-login">Login</button>
+    <button onclick="goRegister()" class="btn btn-register">Register</button>
+  </nav>
+</header>
+
+<!-- Hero Section -->
+<section class="hero">
+  <div class="hero-content">
+    <h1 class="hero-title" id="heroText">Fresh Sweets Everyday</h1>
+    <p class="hero-subtitle">Traditional Indian sweets made with love and care</p>
+  </div>
+  <div class="scroll-indicator">
+    <span>Scroll Down</span>
+    <div class="arrow">↓</div>
+  </div>
+</section>
+
+<!-- Features Section -->
+<section class="features" id="features">
+  <div class="container">
+    <h2 class="section-title">Why Choose Us</h2>
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-icon">🍬</div>
+        <h3>Premium Quality</h3>
+        <p>Handcrafted sweets made with finest ingredients</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🚚</div>
+        <h3>Fast Delivery</h3>
+        <p>Get your favorite sweets delivered to your doorstep</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">💰</div>
+        <h3>Best Prices</h3>
+        <p>Competitive pricing without compromising quality</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">⭐</div>
+        <h3>Customer Satisfaction</h3>
+        <p>Thousands of happy customers across the country</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer>
+  <div class="container">
+    <p>&copy; 2025 Desi Mithai.Just For You. All rights reserved.</p>
+    <p>Made with ❤️ for sweet lovers</p>
+  </div>
+</footer>
+
+<!-- JavaScript for navigation -->
+<script>
+  // Navigation functions
+  function goLogin() {
+    window.location.href = 'login.html';
+  }
+
+  function goRegister() {
+    window.location.href = 'register.html';
+  }
+
+  function scrollToFeatures() {
+    document.getElementById('features').scrollIntoView({ 
+      behavior: 'smooth' 
+    });
+  }
+
+  // Animated hero text
+  const heroTexts = [
+    "Fresh Sweets Everyday",
+    "Traditional Indian Sweets",
+    "Made with Love & Care",
+    "Taste The Tradition"
+  ];
+
+  let currentTextIndex = 0;
+
+  function rotateHeroText() {
+    const heroElement = document.getElementById('heroText');
+    if (heroElement) {
+      heroElement.style.opacity = '0';
+      
+      setTimeout(() => {
+        currentTextIndex = (currentTextIndex + 1) % heroTexts.length;
+        heroElement.textContent = heroTexts[currentTextIndex];
+        heroElement.style.opacity = '1';
+      }, 500);
+    }
+  }
+
+  // Rotate text every 3 seconds
+  setInterval(rotateHeroText, 3000);
+
+  // Check if user is already logged in
+  if (localStorage.getItem('token')) {
+    const heroButtons = document.querySelector('.hero-buttons');
+    if (heroButtons) {
+      heroButtons.innerHTML = `
+        <button onclick="window.location.href='dashboard.html'" class="btn btn-primary">
+          Go to Dashboard
+        </button>
+      `;
+    }
+  }
+
+  // Add smooth transition for hero text
+  const style = document.createElement('style');
+  style.textContent = `
+    .hero-title {
+      transition: opacity 0.5s ease;
+    }
+  `;
+  document.head.appendChild(style);
+</script>
+
+</body>
+</html>
